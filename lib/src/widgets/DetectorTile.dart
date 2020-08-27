@@ -20,29 +20,6 @@ class DetectorTile extends StatelessWidget {
     String humidity = lastInput != null ? lastInput.humidity : "No Data";
     String temprature = lastInput != null ? lastInput.temprature : "No Data";
     String timestamp = lastInput != null ? lastInput.timestamp : "No Data";
-    String day = 'day';
-    String image = 'assets/images/weather/storm_day.png';
-
-    // TODO - Implement image selector with a function
-    if(timestamp != "No Data") {
-      DateTime datetime = DateTime.parse(timestamp);
-      if(datetime.hour < 6 || datetime.hour >= 18) {
-        day = 'night';
-      }
-    }
-    
-
-    if(weather == 'Clear'){
-      image = 'assets/images/weather/clear_$day.png';
-    } else if(weather == 'Clouds') {
-      image = 'assets/images/weather/cloudy_$day.png';
-    } else if(weather == 'Rain') {
-      image = 'assets/images/weather/rainy_$day.png';
-    } else if(weather == 'Haze') {
-      image = 'assets/images/weather/haze_$day.png';
-    } else {
-      image = 'assets/images/weather/storm_$day.png';
-    }
 
     return Container(
       margin: EdgeInsets.only(bottom: 5),
@@ -114,7 +91,7 @@ class DetectorTile extends StatelessWidget {
                         child: Row(
                           children: <Widget>[
                             Image(
-                              image: AssetImage(image),
+                              image: setImage(weather, timestamp),
                               height: 60,
                               width: 60,
                             ),
@@ -165,6 +142,29 @@ class DetectorTile extends StatelessWidget {
       return Colors.orange;
     } else {
       return Colors.red;
+    }
+  }
+
+  AssetImage setImage(weather, timestamp) {
+    var day = 'day';
+
+    if(timestamp != "No Data") {
+      DateTime datetime = DateTime.parse(timestamp);
+      if(datetime.hour < 6 || datetime.hour >= 18) {
+        day = 'night';
+      }
+    }
+
+    if(weather == 'Clear'){
+      return AssetImage('assets/images/weather/clear_$day.png');
+    } else if(weather == 'Clouds') {
+      return AssetImage('assets/images/weather/cloudy_$day.png');
+    } else if(weather == 'Rain') {
+      return AssetImage('assets/images/weather/rainy_$day.png');
+    } else if(weather == 'Haze') {
+      return AssetImage('assets/images/weather/haze_$day.png');
+    } else {
+      return AssetImage('assets/images/weather/storm_$day.png');
     }
   }
 

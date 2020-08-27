@@ -1,4 +1,3 @@
-
 // Packages
 import 'package:scoped_model/scoped_model.dart';
 import 'package:flutter/material.dart';
@@ -6,10 +5,6 @@ import 'package:flutter/rendering.dart';
 
 // Widgets
 import '../widgets/DetectorTile.dart';
-
-// Screens
-// TODO - Details Screen
-// import '../screens/DetectorDetailsScreen.dart';
 
 // Scoped Model - Main Model
 import '../scoped-model/MainModel.dart';
@@ -217,13 +212,9 @@ class _DashboardPageState extends State<DashboardPage> {
         itemCount: model.detectors.length,
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
-            // TODO - Navigation to Details
-            // onTap: () {
-            //   Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => (DetailsScreen(
-            //     id: model.detectors[index].id
-            //   )
-            // )));
-            // },
+            onTap: () {
+              Navigator.pushNamed(context, '/details', arguments: model.detectors[index].id);
+            },
             child: DetectorTile(
               id: model.detectors[index].id,
               name: model.detectors[index].name,

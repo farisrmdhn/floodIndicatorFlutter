@@ -10,14 +10,21 @@ import '../models/Input.dart';
 import 'dart:convert';
 
 class InputModel extends Model {
+  Input _inputById;
   List<Input> _inputs = [];
   List<Input> _inputsById = [];
+
   String _averageWLevel = "";
   String _lastUpdated = "";
+  
   bool _isLoading = false;
 
   bool get isLoading {
     return _isLoading;
+  }
+
+  Input get inputById {
+    return _inputById;
   }
   
   List<Input> get inputs {
@@ -38,9 +45,6 @@ class InputModel extends Model {
 
   void fetchInputs() async{
     _isLoading = true;
-    _lastUpdated = "";
-    _averageWLevel = "";
-    _inputs  = [];
     
     notifyListeners();
     try {
@@ -82,15 +86,50 @@ class InputModel extends Model {
     }
   }
 
+  void fetchInputById(String id) async{
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      http.Response response = await http.get('http://192.168.43.22/floodIndicator/detectors/getDetectorById/$id/b6353c2d-1ddd-4f41-8920-edc9cc66dae8');
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+
+        dynamic responseData = jsonDecode(response.body);
+
+        Input input = Input(
+          detectorId: responseData['id'],
+          waterLevel: responseData['wLevel'],
+          weather: responseData['weather'],
+          temprature: responseData['temprature'],
+          weatherDesc: responseData['weather_desc'],
+          pressure: responseData['pressure'],
+          humidity: responseData['humidity'],
+          windSpeed: responseData['wind_speed'],
+          windDir: responseData['wind_dir'],
+          cloudiness: responseData['cloudiness'],
+          rainVol: responseData['rain_vol'],
+          timestamp: responseData['api_timestamp']
+        );
+        _inputById = input;
+        _isLoading = false;
+        notifyListeners();
+      }
+    } catch(error) {
+      print("Error " + error.toString());
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
   void fetchInputsMonthlyHistory(String id, DateTime dateFrom, DateTime dateTo) async{
     _isLoading = true;
-    _inputsById  = [];
 
     final DateFormat formatter = DateFormat('yyyy-MM-dd');
     final String newDateFrom = formatter.format(dateFrom);
     final String newDateTo = formatter.format(dateTo);
     
-    notifyListeners();
+    notifyListeners();  
     try {
       http.Response response = await http.get('http://192.168.43.22/floodIndicator/pages/getInputMonthlyHistory/$id/$newDateFrom/$newDateTo/b6353c2d-1ddd-4f41-8920-edc9cc66dae8');
 
@@ -114,12 +153,52 @@ class InputModel extends Model {
           );
           fetchedInputList.add(input);
         });
-        _inputs = fetchedInputList;
+        _inputsById = fetchedInputList;
         _isLoading = false;
         notifyListeners();
       }
     } catch(error) {
-      print("Error :" + error.toString());
+      print("Error (InputModel):" + error.toString());
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  void fetchInputsDailyHistory(String id, DateTime date) async{
+    _isLoading = true;
+
+    final DateFormat formatter = DateFormat('yyyy-MM-dd');
+    final String newDate = formatter.format(date);
+    notifyListeners();  
+    try {
+      http.Response response = await http.get('http://192.168.43.22/floodIndicator/pages/getInputsDailyHistory/$id/$newDate/b6353c2d-1ddd-4f41-8920-edc9cc66dae8');
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final List<Input> fetchedInputList = [];
+
+        List<dynamic> responseData = jsonDecode(response.body);
+
+        responseData?.forEach((dynamic data) { 
+          final Input input = Input(
+            waterLevel: data['wlevel'],
+            weather: data['weather'],
+            temprature: data['temprature'].toString(),
+            pressure: data['pressure'].toString(),
+            humidity: data['humidity'].toString(),
+            windSpeed: data['wind_speed'].toString(),
+            windDir: data['wind_dir'].toString(),
+            cloudiness: data['cloudiness'].toString(),
+            rainVol: data['rain_vol'].toString(),
+            timestamp: data['date']
+          );
+          fetchedInputList.add(input);
+        });
+        _inputsById = fetchedInputList;
+        _isLoading = false;
+        notifyListeners();
+      }
+    } catch(error) {
+      print("Error (InputModel):" + error.toString());
       _isLoading = false;
       notifyListeners();
     }

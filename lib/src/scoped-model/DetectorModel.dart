@@ -12,6 +12,8 @@ class DetectorModel extends Model {
   List<Detector> _detectors = [];
   bool _isLoading = false;
   
+  Detector _detectorById;
+  
   bool get isLoading {
     return _isLoading;
   }
@@ -20,9 +22,12 @@ class DetectorModel extends Model {
     return List.from(_detectors);
   }
 
+  Detector get detectorById {
+    return _detectorById;
+  }
+
   void fetchDetectors() async {
     _isLoading = true;
-    _detectors = [];
     notifyListeners();
     try {
       http.Response response = await http.get('http://192.168.43.22/floodIndicator/detectors/getDetectors/b6353c2d-1ddd-4f41-8920-edc9cc66dae8');
@@ -48,6 +53,31 @@ class DetectorModel extends Model {
       }
     } catch (error) {
       print("Error " + error.toString());
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  void fetchDetectorById(String id) async {
+    _isLoading = true;
+    notifyListeners();
+    try {
+      http.Response response = await http.get('http://192.168.43.22/floodIndicator/detectors/getDetectorById/$id/b6353c2d-1ddd-4f41-8920-edc9cc66dae8');
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        dynamic responseData = jsonDecode(response.body);
+        final Detector detector = Detector(
+          id: responseData["id"],
+          name: responseData["name"],
+          latitude: responseData["latitude"],
+          longitude: responseData["longitude"],
+        );
+        _detectorById = detector;
+        _isLoading = false;
+        notifyListeners();
+      }
+    } catch (error) {
+      print("Error (DetectorModel):" + error.toString());
       _isLoading = false;
       notifyListeners();
     }
