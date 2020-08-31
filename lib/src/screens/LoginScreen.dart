@@ -21,7 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return TextFormField(
       controller: emailController,
       decoration: InputDecoration(
-        hintText: 'Your email or username',
+        hintText: 'Enter your email here',
         hintStyle: TextStyle(color: Color(0xFFBDC2CB), fontSize: 18),
       ),
     );
@@ -94,6 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(width: 10),
                     GestureDetector(
                       onTap: () {
+                        Navigator.of(context).pushNamed("/forgotPassword");
                       },
                       child: Text(
                         "Click here",

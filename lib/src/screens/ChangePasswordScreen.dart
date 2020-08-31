@@ -5,35 +5,42 @@ import 'package:flutter/services.dart';
 // ScopedModel - Main Model
 import 'package:FloodIndicator/src/scoped-model/MainModel.dart';
 
-class EditProfileScreen extends StatefulWidget {
+class ChangePasswordScreen extends StatefulWidget {
   final MainModel model;
 
-  EditProfileScreen({this.model});
+  ChangePasswordScreen({this.model});
 
   @override
-  _EditProfileScreenState createState() => _EditProfileScreenState();
+  _ChangePasswordScreenState createState() => _ChangePasswordScreenState();
 }
 
-class _EditProfileScreenState extends State<EditProfileScreen> {
+class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
-  TextEditingController nameController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
-  TextEditingController addressController = TextEditingController();
+  bool _toogleVisibility1 = true;
+  bool _toogleVisibility2 = true;
+  bool _toogleVisibility3 = true;
+
+  TextEditingController oldPassword = TextEditingController();
+  TextEditingController newPassword = TextEditingController();
+  TextEditingController confirmPassword = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             SizedBox(height: 30,),
-            Center(child: Text("Edit Profile", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold))),
+            Center(child: Text("Change your password", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold))),
             SizedBox(height: 30,),
-            _buildNameTextField(),
-            _buildPhoneTextField(),
-            _buildAddressTextField(),
+            _buildOldTextField(),
+            SizedBox(height: 10,),
+            _buildNewTextField(),
+            SizedBox(height: 10,),
+            _buildConfirmTextField(),
             SizedBox(height: 30,),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -64,8 +71,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 SizedBox(width: 15),
                 GestureDetector(
                   onTap: () {
-                    showLoadingIndicator(context, "Updating your profile...");
-                    onSubmit(widget.model.editProfile);
+                    showLoadingIndicator(context, "Changing your password...");
+                    onSubmit(widget.model.changePassword);
                   },
                   child: Container(
                     height: 50,
@@ -76,7 +83,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     ),
                     child: Center(
                       child: Text(
-                        'Confirm',
+                        'Change',
                         style: TextStyle(
                           fontSize: 18,
                           color: Colors.white,
@@ -90,72 +97,104 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             ),
           ],
         ),
-      ) ,
+      ),
     );
   }
 
-  Widget _buildNameTextField(){
-    return Row(
+  Widget _buildOldTextField(){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Name",
+          "Old Password",
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold) ,
         ),
-        SizedBox(width: 40),
         Container(
-          width: 300,
+          width: 400,
           child: TextFormField(
-            controller: nameController..text = widget.model.user.name,
+            controller: oldPassword,
             decoration: InputDecoration(
+              hintText: "Please input your password here",
               hintStyle: TextStyle(color: Color(0xFFBDC2CB), fontSize: 18),
+              suffixIcon: IconButton(
+                onPressed: () {
+                  setState(() {
+                    _toogleVisibility1 = !_toogleVisibility1;
+                  });
+                },
+                icon: _toogleVisibility1 ? Icon(Icons.visibility_off) : Icon(Icons.visibility)
+              ),
             ),
+            obscureText: _toogleVisibility1,
           ),
         ),
       ],
     );
   }
 
-  Widget _buildPhoneTextField(){
-    return Row(
+  Widget _buildNewTextField(){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Phone",
+          "New Password",
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold) ,
         ),
-        SizedBox(width: 32),
         Container(
-          width: 300,
+          width: 400,
           child: TextFormField(
-            keyboardType: TextInputType.number,
-            inputFormatters: <TextInputFormatter>[
-                WhitelistingTextInputFormatter.digitsOnly
-            ],
-            controller: phoneController..text = widget.model.user.phone,
+            controller: newPassword,
             decoration: InputDecoration(
+              hintText: "New password",
               hintStyle: TextStyle(color: Color(0xFFBDC2CB), fontSize: 18),
+              suffixIcon: IconButton(
+                onPressed: () {
+                  setState(() {
+                    _toogleVisibility2 = !_toogleVisibility2;
+                  });
+                },
+                icon: _toogleVisibility2 ? Icon(Icons.visibility_off) : Icon(Icons.visibility)
+              ),
             ),
+            obscureText: _toogleVisibility2,
           ),
         ),
       ],
     );
   }
 
-  Widget _buildAddressTextField(){
-    return Row(
+  Widget _buildConfirmTextField(){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Address",
+          "Confirm Password",
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold) ,
         ),
-        SizedBox(width: 20),
         Container(
-          width: 300,
+          width: 400,
           child: TextFormField(
-            maxLines: 2,
-            controller: addressController..text = widget.model.user.address,
+            controller: confirmPassword,
+            validator: (val){
+              if(val.isEmpty)
+                    return 'Empty';
+              if(val != newPassword.text)
+                    return 'Not Match';
+              return null;
+            },
             decoration: InputDecoration(
+              hintText: "Please re-enter your new password here",
               hintStyle: TextStyle(color: Color(0xFFBDC2CB), fontSize: 18),
+              suffixIcon: IconButton(
+                onPressed: () {
+                  setState(() {
+                    _toogleVisibility3 = !_toogleVisibility3;
+                  });
+                },
+                icon: _toogleVisibility3 ? Icon(Icons.visibility_off) : Icon(Icons.visibility)
+              ),
             ),
+            obscureText: _toogleVisibility3,
           ),
         ),
       ],
@@ -182,29 +221,29 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     );
   }
 
-  void onSubmit(Function editProfile) {
-    editProfile(nameController.text, phoneController.text, addressController.text).then((final response) {
+  void onSubmit(Function changePassword) {
+    changePassword(oldPassword.text, newPassword.text, confirmPassword.text).then((final response) {
       if (!response['hasError']) {
           Navigator.of(context).pop();
           Navigator.of(context).pushReplacementNamed("/main");
         } else {
           Navigator.of(context).pop();
-          _showAlertDialog();
+          _showAlertDialog(response['message']);
         }
     });
   }
 
-  Future<void> _showAlertDialog() async {
+  Future<void> _showAlertDialog(String message) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Update failed'),
+          title: Text('Failed'),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('Unable to update your profile')
+                Text(message)
               ],
             ),
           ),

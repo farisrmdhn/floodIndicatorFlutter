@@ -60,9 +60,18 @@ class _ProfilePageState extends State<ProfilePage> {
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   child: Column(
                     children: <Widget> [
-                      CustomListTile(
-                        icon: Icons.lock,
-                        text: "Change Password",
+                      ScopedModelDescendant<MainModel>(
+                        builder: (BuildContext context, Widget child, MainModel model) {
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pushNamed("/changePassword");
+                            },
+                            child: CustomListTile(
+                              icon: Icons.lock,
+                              text: "Change Password",
+                            ),
+                          );
+                        } 
                       ),
                       Divider(height: 10, color: Colors.grey,),
                       ScopedModelDescendant<MainModel>(
@@ -105,7 +114,6 @@ class _ProfilePageState extends State<ProfilePage> {
                             "Notification",
                             style: TextStyle(
                               fontSize: 16,
-                              
                             ),
                           ),
                           Switch(value: turnOnNotification, onChanged: (bool value){
@@ -209,21 +217,26 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
                 SizedBox(height: 10),
-                Container(
-                  height: 25,
-                  width:70,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.pinkAccent
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed('/editProfile');
+                  },
+                  child: Container(
+                    height: 25,
+                    width:70,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.pinkAccent
+                      ),
+                      borderRadius: BorderRadius.circular(20)
                     ),
-                    borderRadius: BorderRadius.circular(20)
-                  ),
-                  child: Center(
-                    child: Text(
-                      "Edit",
-                      style: TextStyle(
-                        color: Colors.pinkAccent,
-                        fontSize: 18
+                    child: Center(
+                      child: Text(
+                        "Edit",
+                        style: TextStyle(
+                          color: Colors.pinkAccent,
+                          fontSize: 18
+                        ),
                       ),
                     ),
                   ),

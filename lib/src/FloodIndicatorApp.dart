@@ -7,6 +7,8 @@ import 'screens/LoginScreen.dart';
 import 'screens/MainScreen.dart';
 import 'screens/DetailsScreen.dart';
 import 'screens/EditProfileScreen.dart';
+import 'screens/ForgotPasswordScreen.dart';
+import 'screens/ChangePasswordScreen.dart';
 
 // Scoped Model - Main Model
 import 'scoped-model/MainModel.dart';
@@ -45,6 +47,12 @@ class FloodIndicatorApp extends StatelessWidget {
             break;
           case '/editProfile':
             return SlideRightRoute(widget:EditProfileScreen(model: model));
+            break;
+          case '/changePassword':
+            return SlideRightRoute(widget:ChangePasswordScreen(model: model));
+            break;
+          case '/forgotPassword':
+            return SlideRightRoute(widget:ForgotPasswordScreen(model: model));
             break;
         }
 
