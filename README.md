@@ -1,6 +1,6 @@
 # flood_indicator
 
-A new Flutter project.
+Flood Indicator Mobile Apps using Flutter, Currently works in Android.
 
 ## Getting Started
 
