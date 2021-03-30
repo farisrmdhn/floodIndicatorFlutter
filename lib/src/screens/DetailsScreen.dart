@@ -52,6 +52,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
     widget.model.fetchDetectorById(widget.id);
     widget.model.fetchInputById(widget.id);
     widget.model.fetchInputsMonthlyHistory(widget.id, DateTime.now().add(new Duration(days: -30)), DateTime.now());
+    widget.model.fetchNotificationsbyId(widget.id);
   }
 
   @override
@@ -220,6 +221,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
             child: GestureDetector(
               onTap: () {
                 model.fetchDetectorById(widget.id);
+                model.fetchNotificationsbyId(widget.id);
               },
               child: Icon(
                 Icons.refresh, 

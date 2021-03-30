@@ -30,7 +30,7 @@ class DetectorModel extends Model {
     _isLoading = true;
     notifyListeners();
     try {
-      http.Response response = await http.get('http://192.168.43.22/floodIndicator/detectors/getDetectors/b6353c2d-1ddd-4f41-8920-edc9cc66dae8');
+      http.Response response = await http.get('http://192.168.1.100/floodIndicator/detectors/getDetectors/b6353c2d-1ddd-4f41-8920-edc9cc66dae8');
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final List<Detector> fetchedDetectorList = [];
@@ -62,7 +62,7 @@ class DetectorModel extends Model {
     _isLoading = true;
     notifyListeners();
     try {
-      http.Response response = await http.get('http://192.168.43.22/floodIndicator/detectors/getDetectorById/$id/b6353c2d-1ddd-4f41-8920-edc9cc66dae8');
+      http.Response response = await http.get('http://192.168.1.100/floodIndicator/detectors/getDetectorById/$id/b6353c2d-1ddd-4f41-8920-edc9cc66dae8');
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         dynamic responseData = jsonDecode(response.body);

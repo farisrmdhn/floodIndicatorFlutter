@@ -48,7 +48,7 @@ class InputModel extends Model {
     
     notifyListeners();
     try {
-      http.Response response = await http.get('http://192.168.43.22/floodIndicator/pages/getLatestInput/b6353c2d-1ddd-4f41-8920-edc9cc66dae8');
+      http.Response response = await http.get('http://192.168.1.100/floodIndicator/pages/getLatestInput/b6353c2d-1ddd-4f41-8920-edc9cc66dae8');
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final List<Input> fetchedInputList = [];
@@ -91,7 +91,7 @@ class InputModel extends Model {
     notifyListeners();
 
     try {
-      http.Response response = await http.get('http://192.168.43.22/floodIndicator/detectors/getDetectorById/$id/b6353c2d-1ddd-4f41-8920-edc9cc66dae8');
+      http.Response response = await http.get('http://192.168.1.100/floodIndicator/detectors/getDetectorById/$id/b6353c2d-1ddd-4f41-8920-edc9cc66dae8');
 
       if (response.statusCode == 200 || response.statusCode == 201) {
 
@@ -131,7 +131,7 @@ class InputModel extends Model {
     
     notifyListeners();  
     try {
-      http.Response response = await http.get('http://192.168.43.22/floodIndicator/pages/getInputMonthlyHistory/$id/$newDateFrom/$newDateTo/b6353c2d-1ddd-4f41-8920-edc9cc66dae8');
+      http.Response response = await http.get('http://192.168.1.100/floodIndicator/pages/getInputMonthlyHistory/$id/$newDateFrom/$newDateTo/b6353c2d-1ddd-4f41-8920-edc9cc66dae8');
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final List<Input> fetchedInputList = [];
@@ -171,7 +171,7 @@ class InputModel extends Model {
     final String newDate = formatter.format(date);
     notifyListeners();  
     try {
-      http.Response response = await http.get('http://192.168.43.22/floodIndicator/pages/getInputsDailyHistory/$id/$newDate/b6353c2d-1ddd-4f41-8920-edc9cc66dae8');
+      http.Response response = await http.get('http://192.168.1.100/floodIndicator/pages/getInputsDailyHistory/$id/$newDate/b6353c2d-1ddd-4f41-8920-edc9cc66dae8');
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final List<Input> fetchedInputList = [];

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "488342199302",
+    "firebase_url": "https://flood-indicator.firebaseio.com",
+    "project_id": "flood-indicator",
+    "storage_bucket": "flood-indicator.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:488342199302:android:af0da665ae4d760a15b787",
+        "android_client_info": {
+          "package_name": "com.example.flood_indicator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "488342199302-bo7m6nuoegrt3ku9gsi1qcl3etsh5stq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxgHapkyNTlU0hh_aPVLG0QFfV5Tmz3Fc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "488342199302-bo7m6nuoegrt3ku9gsi1qcl3etsh5stq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

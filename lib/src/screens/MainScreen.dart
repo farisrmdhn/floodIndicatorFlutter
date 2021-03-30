@@ -51,6 +51,7 @@ class _MainScreenState extends State<MainScreen> {
     // Fetching Detectors and Inputs from Web
     widget.model.fetchDetectors();
     widget.model.fetchInputs();
+    widget.model.fetchNotifications();
   }
 
   @override
@@ -87,7 +88,7 @@ class _MainScreenState extends State<MainScreen> {
                       minHeight: 12,
                     ),
                     child: new Text(
-                      "1",
+                      widget.model.notifications.length.toString(),
                       style: new TextStyle(
                         color: Colors.white,
                         fontSize: 8,

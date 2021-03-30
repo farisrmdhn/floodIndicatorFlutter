@@ -17,7 +17,7 @@ class UserModel extends Model {
     email: "mark@gmail.com",
     phone: "0817654321",
     address: "St. Mavericks 6C/F3, Dallas, TX",
-    picture: "http://192.168.43.22/floodIndicator/assets/images/profile/myAvatar.png",
+    picture: "http://192.168.1.100/floodIndicator/assets/images/profile/myAvatar.png",
     userType: "User",
   );
   bool _isLoading = false;
@@ -37,7 +37,7 @@ class UserModel extends Model {
     String message;
     bool hasError = false;
 
-    var url = 'http://192.168.43.22/floodIndicator/Users/userLogin/b6353c2d-1ddd-4f41-8920-edc9cc66dae8';
+    var url = 'http://192.168.1.100/floodIndicator/Users/userLogin/b6353c2d-1ddd-4f41-8920-edc9cc66dae8';
     var data = {'email': email, 'password': password};
 
     try {
@@ -96,7 +96,7 @@ class UserModel extends Model {
     String message;
     bool hasError = false;
 
-    var url = 'http://192.168.43.22/floodIndicator/Users/editProfile/b6353c2d-1ddd-4f41-8920-edc9cc66dae8';
+    var url = 'http://192.168.1.100/floodIndicator/Users/editProfile/b6353c2d-1ddd-4f41-8920-edc9cc66dae8';
     var data = {'id': _user.id, 'name': name, 'phone': phone, 'address': address};
     try {
       http.Response response = await http.post(url, body: json.encode(data));
@@ -150,7 +150,7 @@ class UserModel extends Model {
     String message;
     bool hasError = false;
 
-    var url = 'http://192.168.43.22/floodIndicator/Users/forgotPassword/b6353c2d-1ddd-4f41-8920-edc9cc66dae8';
+    var url = 'http://192.168.1.100/floodIndicator/Users/forgotPassword/b6353c2d-1ddd-4f41-8920-edc9cc66dae8';
     var data = {'email': email};
 
     try {
@@ -208,7 +208,7 @@ class UserModel extends Model {
     oldPassword =  md5.convert(utf8.encode(oldPassword)).toString();
     newPassword =  md5.convert(utf8.encode(newPassword)).toString();
 
-    var url = 'http://192.168.43.22/floodIndicator/Users/changePassword/b6353c2d-1ddd-4f41-8920-edc9cc66dae8';
+    var url = 'http://192.168.1.100/floodIndicator/Users/changePassword/b6353c2d-1ddd-4f41-8920-edc9cc66dae8';
     var data = {'id': _user.id, 'old_password': oldPassword, 'new_password': newPassword};
     try {
       http.Response response = await http.post(url, body: json.encode(data));

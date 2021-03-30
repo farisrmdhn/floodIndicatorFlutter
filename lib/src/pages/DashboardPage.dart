@@ -48,6 +48,7 @@ class _DashboardPageState extends State<DashboardPage> {
                         print("Refreshing Dashboard...");
                         model.fetchDetectors();
                         model.fetchInputs();
+                        model.fetchNotifications();
                       },
                       child: Row(
                         children: <Widget>[

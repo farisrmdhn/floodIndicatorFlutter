@@ -10,6 +10,9 @@ import 'screens/EditProfileScreen.dart';
 import 'screens/ForgotPasswordScreen.dart';
 import 'screens/ChangePasswordScreen.dart';
 
+// Test FCM
+// import 'testing/NotificationFCM.dart';
+
 // Scoped Model - Main Model
 import 'scoped-model/MainModel.dart';
 
@@ -39,6 +42,9 @@ class FloodIndicatorApp extends StatelessWidget {
           case '/':
             return SlideRightRoute(widget:LoginScreen());
             break;
+          // case '/':
+          //   return SlideRightRoute(widget:HomePage());
+          //   break;
           case '/main':
             return SlideRightRoute(widget:MainScreen(model: model));
             break;
